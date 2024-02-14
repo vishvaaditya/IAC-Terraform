@@ -11,7 +11,7 @@ const PORT = 5000;
 app.use(cors());
 app.use(express.json());
 
-const githubToken = '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'; // Replace with your GitHub token
+const githubToken = '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'; // Replace with your GitHub token
 const repoOwner = 'vishvaaditya';
 const repoName = 'iac-terraform';
 const filePath = 'E:/IAC-Portal-React/backend/variables.tf'; // Adjust the path to your main.tf file
@@ -48,6 +48,7 @@ app.post('/update-terraform', async (req, res) => {
     // Generate a new SHA for the commit
     const newCommitSha = getLatestCommitSha();
     console.log(newCommitSha)
+    
 
     // Commit and push changes to GitHub with the new commit SHA
     await axios.post(`https://api.github.com/repos/${repoOwner}/${repoName}/git/refs`, {
