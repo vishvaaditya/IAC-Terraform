@@ -11,16 +11,16 @@ const PORT = 5000;
 app.use(cors());
 app.use(express.json());
 
-const githubToken = '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'; // Replace with your GitHub token
+const githubToken = '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'; // Replace with your GitHub token
 const repoOwner = 'vishvaaditya';
-const repoName = 'IAC-Terraform';
-const filePath = 'E:/IAC-Portal-React/backend/main.tf'; // Adjust the path to your main.tf file
+const repoName = 'iac-terraform';
+const filePath = 'E:/IAC-Portal-React/backend/variables.tf'; // Adjust the path to your main.tf file
 
 // Function to get the latest commit SHA for a specific branch
 function getLatestCommitSha(defaultBranch = 'main') {
   try {
     // Execute Git command to get the latest commit SHA for the specified branch
-    const command = `"C:\\Program Files\\Git\\bin\\" git rev-parse ${defaultBranch}`;
+    const command = `"C:\\Program Files\\Git\\bin\\git" rev-parse ${defaultBranch}`;
     const latestCommitSha = execSync(command, { encoding: 'utf-8' }).trim();
     return latestCommitSha;
   } catch (error) {
@@ -38,15 +38,15 @@ app.post('/update-terraform', async (req, res) => {
 
     // Replace placeholders with user input
     const updatedContent = currentContent
-      .replace(/instanceType/g, instanceType)
-      .replace(/instanceName/g, instanceName)
-      .replace(/amiId/g, amiId);
+      .replace(/instancetype_place/g, instanceType)
+      .replace(/instancename_place/g, instanceName)
+      .replace(/amiid_place/g, amiId);
 
     // Write the updated content back to main.tf
     await fs.writeFile(filePath, updatedContent, 'utf-8');
 
     // Generate a new SHA for the commit
-    const newCommitSha = getLatestCommitSha('test');
+    const newCommitSha = getLatestCommitSha();
     console.log(newCommitSha)
 
     // Commit and push changes to GitHub with the new commit SHA
